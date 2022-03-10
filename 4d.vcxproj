@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventController.cpp" />
     <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -163,7 +163,7 @@
     <None Include="output\Release\sfml-window-2.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventController.h" />
     <ClInclude Include="GlobalFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,10 +18,10 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
+    <ClCompile Include="GlobalFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalFunctions.cpp">
+    <ClCompile Include="EventController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,10 +60,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventHandler.h">
+    <ClInclude Include="GlobalFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalFunctions.h">
+    <ClInclude Include="EventController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
