@@ -1,21 +1,32 @@
-#include "EventHandler.h"
+#include "EventController.h"
 
-EventHandler::EventHandler(sf::RenderWindow* _win, viewHandler* _vhandler, sf::View* _view) : win(_win), vhandler(_vhandler), fixedView(_view) {
-}
+EventController::EventController(sf::RenderWindow* _win) : win(_win), mpos(), prevmpos(),
+    lmb(false), rmb(false), dragging(false), keyHandlers(), dragHandlers(), wheelHandlers(), 
+    resizeHandlers() {}
 
-void EventHandler::handle() {
+void EventController::handle() {
     // event handling
-    Event event;
+    sf::Event event;
     while (win->pollEvent(event)) {
         // close window event
-        if (event.type == Event::Closed) {
+        if (event.type == sf::Event::Closed) {
             win->close();
         }
-        // view handling (happens only when an event is done)
-        else if (event.type == Event::MouseWheelScrolled) {
-            vhandler->mouseWheelScroll(event.mouseWheelScroll.delta);
+        // wheel events
+        else if (event.type == sf::Event::MouseWheelScrolled) {
+            for (auto i : wheelHandlers) {
+                // return value not used
+                i(event.mouseWheelScroll.delta);
+            }
         }
-        else if (event.type == Event::Resized) {
+        // resize events
+        else if (event.type == sf::Event::Resized) {
+            for (auto i : resizeHandlers) {
+                // return value not used
+                i(sf::Vector2i(event.size.width, event.size.height));
+            }
+            // legacy 2d code for view handling
+            /*
             //std::cout << "was: " << vhandler->view.getSize().x << " " << vhandler->view.getSize().y << "\n";
             sf::Vector2f prevclientsize = vhandler->clientsize;
             vhandler->clientsize = sf::Vector2f(event.size.width, event.size.height);
@@ -25,8 +36,32 @@ void EventHandler::handle() {
 
             fixedView->setSize(event.size.width, event.size.height);
             fixedView->setCenter(event.size.width / 2.0, event.size.height / 2.0);
-            
+            */
         }
-        
+        // key events
+        else if (event.type == sf::Event::KeyPressed) {
+            keyHandlers[event.key.code]();
+        }
+    }
+    // since dragging results in no event, it needs to be called constantly
+    if (dragging) {
+        if (lmb) {
+            for (auto i : dragHandlers) {
+                // return value not used
+                i(sf::Mouse::Left, mpos - prevmpos);
+            }
+        }
+        if (rmb) {
+            for (auto i : dragHandlers) {
+                // return value not used
+                i(sf::Mouse::Right, mpos - prevmpos);
+            }
+        }
+    }
+    // same goes for pressing and holding keys
+    for (auto i : keysToCheck) {
+        if (keypress(i)) {
+            pressHandlers[i]();
+        }
     }
 }

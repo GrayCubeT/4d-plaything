@@ -14,6 +14,7 @@ int main() {\
 			if (event.type == Event::Closed) {
 				win.close();
 			}
+            
 		}
 		win.clear();
 		win.display();
