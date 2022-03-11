@@ -9,72 +9,48 @@ enum {
     SHIFT_MULTIPLIER_VALUE = 2
 };
 
-enum class eventTypes {
-    KEY,
-    WHEEL,
-    RESIZE,
-    DRAG,
-    PRESS
-
-};
 
 
-/// Handles all window events
+/* Handles all window events
+ *
+ * NOTE: might delete all handlers with destructor (?)
+*/
 class EventController {
 
     sf::RenderWindow* win;
     sf::Vector2f mpos, prevmpos;
     bool lmb, rmb;
-    /// needed so handler will not assume button click as click and drag
+    /* needed so handler will not assume button click as click and drag */
     bool dragging;
     
-    /// handlers for single key press events, argument is key pressed
-    std::map<sf::Keyboard::Key, std::function<bool()>> keyHandlers;
-    /// handlers for holding key pressed, argument is key pressed
-    std::map<sf::Keyboard::Key, std::function<bool()>> pressHandlers;
-    /// extra class to hold all the keys that need to be checked 
-    std::vector<sf::Keyboard::Key> keysToCheck;
+    
+    /* handlers for holding key pressed, argument is key pressed */
+    std::map<unsigned int, std::shared_ptr<std::function<void()>>> pressHandlers;
+    /* extra class to hold all the keys that need to be checked */
+    std::vector<unsigned int> keysToCheck;
 
-    /// handlers for click and drag, argument is mpos change
-    std::vector<std::function<bool(sf::Mouse::Button, sf::Vector2f)>> dragHandlers;
-    /// handlers for wheel events, argument is change
-    std::vector<std::function<bool(double)>> wheelHandlers;
-    /// handler for resize events
-    std::vector<std::function<bool(sf::Vector2i)>> resizeHandlers;
+    /* mouse drag handler */
+    std::shared_ptr<std::function<bool(sf::Mouse::Button, sf::Vector2f)>> dragHandler;
+    
+    /* a full map of all general-purpose handlers 
+       only supports 1 handler per event.
+    */
+    std::map<sf::Event::EventType, std::shared_ptr<std::function<bool(sf::Event)>>> handlers;
 
 public:    
-    /// constructor only uses the current window
+    /* default constructor, everything is set to pretty much 0 */
     EventController(sf::RenderWindow* _win);
-
-    /// this method is called every frame to register all window events
-    /// calls all the possible handlers
+    ~EventController();
+    /* this method is called every frame to register all window events
+     * calls all the possible handlers internally
+    */
     void handle();
     
-    /// add a handler
-    template <typename T>
-    bool addHandler(eventTypes type, std::function<T> handler);
-};
+    /* add a handler by defining its event type and any function as a handler */
+    bool addHandler(sf::Event::EventType type, std::shared_ptr<std::function<bool(sf::Event)>> handler);
 
-template<typename T>
-inline bool EventController::addHandler(eventTypes type, std::function<T> handler) {
-    switch (type) {
-    case eventTypes::KEY:
-        keyHandlers.push_back(handler);
-        return true;
-    case eventTypes::WHEEL:
-        wheelHandlers.push_back(handler);
-        return true;
-    case eventTypes::RESIZE:
-        resizeHandlers.push_back(handler);
-        return true;
-    case eventTypes::DRAG:
-        dragHandlers.push_back(handler);
-        return true;
-    case eventTypes::PRESS:
-        pressHandlers.push_back(handler);
-        return true;
-    default:
-        break;
-    }
-    return false;
-}
+    /* add a handler for key press and hold events */
+    bool addPressHandler(sf::Keyboard::Key, std::shared_ptr<std::function<void()>> handler);
+
+    bool setDragHandler(std::shared_ptr<std::function<bool(sf::Mouse::Button, sf::Vector2f)>>);
+};
