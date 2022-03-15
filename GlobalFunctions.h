@@ -1,17 +1,17 @@
 /// Most basic functions and classes that are used everywhere
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <openGL/glew.h>
+#include <openGL/glfw3.h>
 #include <math.h>
 #include <sstream>
 #include <iomanip>
-#include "sfml/OpenGL.hpp"
+
 
 const double GLOBAL_SPEED_MODIFIER = 0.1;
+const double MOUSE_SENSITIVITY = 0.1;
 
 /// checks for keypress
-/// basically a shortened version of sfml functionality
-bool keypress(sf::Keyboard::Key key);
-bool keypress(unsigned int);
+bool keypress(GLFWwindow* win, unsigned char c);
 
 
 /// translate number (int, double or any other) to string
@@ -28,6 +28,3 @@ inline std::string numtostr(T number, int precision) {
     std::string ans = ss.str();
     return ans;
 }
-
-
-void perspectiveGL(GLdouble fovY, GLdouble aspect, GLdouble zNear, GLdouble zFar);

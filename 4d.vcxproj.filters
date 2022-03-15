@@ -21,9 +21,6 @@
     <ClCompile Include="GlobalFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Handlers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,6 +28,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLSetup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,36 +46,15 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <None Include="output\Debug\openal32.dll">
+    <None Include="BasicVertexShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="output\Debug\sfml-graphics-d-2.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Debug\sfml-system-d-2.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Debug\sfml-window-d-2.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Release\openal32.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Release\sfml-graphics-2.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Release\sfml-system-2.dll">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="output\Release\sfml-window-2.dll">
+    <None Include="BasicFragmentShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Handlers.h">
@@ -82,6 +64,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
